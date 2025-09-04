@@ -1,0 +1,37 @@
+# Development dependencies for Lending Club Default Risk Prediction
+# Include core requirements
+-r requirements.txt
+
+# Testing framework
+pytest==7.4.0
+pytest-cov==4.1.0
+pytest-mock==3.11.1
+pytest-timeout==2.1.0
+
+# Code formatting and linting
+black==23.7.0
+isort==5.12.4
+flake8==6.0.0
+mypy==1.5.1
+
+# Pre-commit hooks
+pre-commit==3.3.3
+
+# Security linting
+bandit==1.7.5
+
+# Jupyter notebook support
+jupyter==1.0.0
+jupyterlab==4.0.5
+ipywidgets==8.1.0
+
+# Enhanced visualization (optional)
+plotly==5.15.0
+
+# Documentation (if needed)
+# mkdocs==1.5.2
+# mkdocs-material==9.1.21
+
+# Development utilities
+ipdb==0.13.13  # Enhanced debugger
+tqdm==4.66.1   # Progress bars
