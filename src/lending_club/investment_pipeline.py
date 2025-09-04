@@ -373,19 +373,31 @@ class InvestmentDecisionMaker:
         term_distribution = {term: amount/total_investment for term, amount in term_dist.items()}
         
         # Risk metrics
-        risk_scores = [inv.default_probability for inv in investments]
-        expected_returns = [inv.expected_return for inv in investments]
-        
-        risk_metrics = {
-            'portfolio_default_risk': np.mean(risk_scores),
-            'default_risk_std': np.std(risk_scores),
-            'max_default_risk': np.max(risk_scores),
-            'min_default_risk': np.min(risk_scores),
-            'expected_portfolio_return': np.mean(expected_returns),
-            'return_std': np.std(expected_returns),
-            'sharpe_ratio': np.mean(expected_returns) / (np.std(expected_returns) + 1e-8),
-            'concentration_risk': max(grade_distribution.values()) if grade_distribution else 0
-        }
+        risk_scores = [inv.default_probability for inv in investments] if investments else []
+        expected_returns = [inv.expected_return for inv in investments] if investments else []
+
+        if investments:
+            risk_metrics = {
+                'portfolio_default_risk': np.mean(risk_scores),
+                'default_risk_std': np.std(risk_scores),
+                'max_default_risk': np.max(risk_scores),
+                'min_default_risk': np.min(risk_scores),
+                'expected_portfolio_return': np.mean(expected_returns),
+                'return_std': np.std(expected_returns),
+                'sharpe_ratio': np.mean(expected_returns) / (np.std(expected_returns) + 1e-8),
+                'concentration_risk': max(grade_distribution.values()) if grade_distribution else 0
+            }
+        else:
+            risk_metrics = {
+                'portfolio_default_risk': 0.0,
+                'default_risk_std': 0.0,
+                'max_default_risk': 0.0,
+                'min_default_risk': 0.0,
+                'expected_portfolio_return': 0.0,
+                'return_std': 0.0,
+                'sharpe_ratio': 0.0,
+                'concentration_risk': 0.0
+            }
         
         return {
             'total_investment': total_investment,

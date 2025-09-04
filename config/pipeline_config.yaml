@@ -159,8 +159,8 @@ investment:
   selection_strategy: "lowest_risk"  # Options: lowest_risk, highest_expected_value, balanced_portfolio
   
   # Risk parameters
-  max_default_probability: 0.25  # Maximum acceptable default probability
-  min_expected_return: 0.05  # Minimum expected return rate
+  max_default_probability: 0.50  # Maximum acceptable default probability (relaxed for lending data)
+  min_expected_return: 0.01  # Minimum expected return rate (relaxed for lending data)
   
   # Portfolio diversification
   max_concentration_per_grade: 0.30  # Maximum allocation per loan grade

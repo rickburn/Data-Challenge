@@ -954,3 +954,84 @@ KeyError: 'model_type'
 2025-09-03 21:40:40,067 | src.lending_club.model_pipeline | INFO | train_model:113 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Training logistic model on 330861 samples
 2025-09-03 21:40:40,067 | src.lending_club.model_pipeline | INFO | train_model:120 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Performing hyperparameter optimization...
 2025-09-03 21:40:40,067 | src.lending_club.model_pipeline | INFO | _perform_hyperparameter_search:276 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Starting hyperparameter search with 8 threads
+2025-09-03 21:50:56,763 | src.lending_club.model_pipeline | INFO | _perform_hyperparameter_search:284 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Best cross-validation ROC-AUC: 0.7187
+2025-09-03 21:50:56,763 | src.lending_club.model_pipeline | INFO | _perform_hyperparameter_search:285 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Best parameters: {'C': 0.01, 'penalty': 'l1', 'solver': 'liblinear'}
+2025-09-03 21:50:57,014 | src.lending_club.model_pipeline | INFO | _evaluate_model_performance:327 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Training ROC-AUC: 0.7190
+2025-09-03 21:50:57,015 | src.lending_club.model_pipeline | INFO | _evaluate_model_performance:328 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Validation ROC-AUC: 0.6952
+2025-09-03 21:50:57,015 | src.lending_club.model_pipeline | INFO | _evaluate_model_performance:329 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Training Brier Score: 0.1396
+2025-09-03 21:50:57,015 | src.lending_club.model_pipeline | INFO | _evaluate_model_performance:330 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Validation Brier Score: 0.1465
+2025-09-03 21:50:57,015 | src.lending_club.model_pipeline | INFO | _extract_feature_importance:360 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Top 5 features: ['sub_grade_numeric: 0.6458', 'int_rate_low: 0.2294', 'verified_Not Verified: 0.0111', 'has_delinq: 0.0081', 'annual_income_log: 0.0078']
+2025-09-03 21:50:57,015 | src.lending_club.model_pipeline | INFO | _validate_performance_thresholds:381 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | ✅ Model meets all performance thresholds
+2025-09-03 21:50:57,015 | src.lending_club.model_pipeline | INFO | train_model:138 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Model training completed successfully
+2025-09-03 21:50:57,018 | data_operations | INFO | track_operation:253 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Data transformation tracked
+2025-09-03 21:50:57,019 | src.lending_club.model_pipeline | INFO | wrapper:350 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | SUCCESS: train_model
+2025-09-03 21:50:57,019 | src.lending_club.model_pipeline | INFO | wrapper:335 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | ENTRY: calibrate_model
+2025-09-03 21:50:57,019 | src.lending_club.model_pipeline | INFO | calibrate_model:465 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Calibrating model using platt method
+2025-09-03 21:50:57,327 | src.lending_club.model_pipeline | INFO | _evaluate_calibration_quality:538 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Brier Score improvement: 0.0001
+2025-09-03 21:50:57,327 | src.lending_club.model_pipeline | INFO | _evaluate_calibration_quality:539 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | ECE improvement: 0.0059
+2025-09-03 21:50:57,327 | src.lending_club.model_pipeline | INFO | _evaluate_calibration_quality:540 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Calibration slope: 0.9996 (ideal: 1.0)
+2025-09-03 21:50:57,327 | src.lending_club.model_pipeline | INFO | _evaluate_calibration_quality:541 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Calibration intercept: -0.0005 (ideal: 0.0)
+2025-09-03 21:50:57,327 | src.lending_club.model_pipeline | INFO | calibrate_model:483 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Model calibration completed
+2025-09-03 21:50:57,328 | src.lending_club.model_pipeline | INFO | wrapper:350 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | SUCCESS: calibrate_model
+2025-09-03 21:50:58,646 | src.lending_club.model_pipeline | INFO | _save_feature_importance_plot:436 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Feature importance plot saved: outputs/models/feature_importance_logistic_20250903_215057.png
+2025-09-03 21:50:58,647 | src.lending_club.model_pipeline | INFO | save_model_artifacts:416 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Model artifacts saved to outputs/models
+2025-09-03 21:50:58,647 | main_pipeline | INFO | wrapper:350 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | SUCCESS: train_and_calibrate_model
+2025-09-03 21:50:58,647 | root | INFO | run:424 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Model training completed: logistic with AUC = N/A
+2025-09-03 21:50:58,647 | root | INFO | run:428 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Starting investment decision phase
+2025-09-03 21:50:58,647 | src.utils.progress_tracker | INFO | update:204 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Progress update: Making investment decisions...
+2025-09-03 21:50:58,647 | main_pipeline | INFO | wrapper:335 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | ENTRY: make_investment_decisions
+2025-09-03 21:50:58,654 | src.lending_club.investment_pipeline | INFO | wrapper:335 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | ENTRY: select_investments
+2025-09-03 21:50:58,654 | src.lending_club.investment_pipeline | INFO | select_investments:63 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Selecting investments with $5000.00 budget using lowest_risk strategy
+2025-09-03 21:51:04,290 | src.lending_club.investment_pipeline | INFO | _create_investment_candidates:134 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Created 103546 investment candidates
+2025-09-03 21:51:04,346 | src.lending_club.investment_pipeline | INFO | _filter_by_risk_constraints:182 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Filtered to 0 candidates after risk constraints
+2025-09-03 21:51:04,346 | src.lending_club.investment_pipeline | INFO | _validate_portfolio_constraints:324 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Portfolio has 0 loans (minimum diversity target: 100)
+2025-09-03 21:51:04,346 | src.lending_club.investment_pipeline | INFO | select_investments:80 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Selected 0 investments totaling $0.00
+2025-09-03 21:51:04,390 | data_operations | INFO | track_operation:253 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Data transformation tracked
+2025-09-03 21:51:04,400 | src.lending_club.investment_pipeline | INFO | wrapper:350 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | SUCCESS: select_investments
+2025-09-03 21:51:04,400 | main_pipeline | ERROR | wrapper:376 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | ERROR: make_investment_decisions
+Traceback (most recent call last):
+  File "/home/rick/repos/Data-Challenge/src/utils/logging_config.py", line 346, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rick/repos/Data-Challenge/main_pipeline.py", line 298, in make_investment_decisions
+    decision_summary = decision_maker.generate_decision_summary(investment_decisions)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rick/repos/Data-Challenge/src/lending_club/investment_pipeline.py", line 415, in generate_decision_summary
+    'min': portfolio_metrics['risk_metrics']['min_default_risk'],
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'min_default_risk'
+2025-09-03 21:51:04,401 | src.utils.progress_tracker | INFO | close:293 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Progress tracker completed: Lending Club ML Pipeline
+2025-09-03 21:51:04,401 | root | ERROR | run:456 | exec_id=6a61b808-5923-4a61-a02d-caa3ae930b57 | Pipeline failed: 'min_default_risk'
+Traceback (most recent call last):
+  File "/home/rick/repos/Data-Challenge/main_pipeline.py", line 430, in run
+    investment_decisions = self.make_investment_decisions(model_dict, engineered_data)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rick/repos/Data-Challenge/src/utils/logging_config.py", line 346, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rick/repos/Data-Challenge/main_pipeline.py", line 298, in make_investment_decisions
+    decision_summary = decision_maker.generate_decision_summary(investment_decisions)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rick/repos/Data-Challenge/src/lending_club/investment_pipeline.py", line 415, in generate_decision_summary
+    'min': portfolio_metrics['risk_metrics']['min_default_risk'],
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'min_default_risk'
+2025-09-03 21:51:29,860 | src.utils.logging_config | INFO | setup_logging:144 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Logging system initialized | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | log_dir=logs | main_log=pipeline_comprehensive.log
+2025-09-03 21:51:29,862 | src.utils.logging_config | INFO | setup_pipeline_logging:427 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Pipeline logging system initialized
+2025-09-03 21:51:29,863 | src.utils.progress_tracker | INFO | __init__:142 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Progress tracker initialized: Lending Club ML Pipeline
+2025-09-03 21:51:29,863 | root | INFO | setup_infrastructure:118 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Infrastructure setup completed
+2025-09-03 21:51:29,863 | main_pipeline | INFO | wrapper:350 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | SUCCESS: setup_infrastructure
+2025-09-03 21:51:29,863 | root | INFO | run:398 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Starting data loading and validation phase
+2025-09-03 21:51:29,863 | src.utils.progress_tracker | INFO | update:204 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Progress update: Loading and validating data...
+2025-09-03 21:51:29,863 | main_pipeline | INFO | wrapper:335 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | ENTRY: load_and_validate_data
+2025-09-03 21:51:29,864 | src.lending_club.data_pipeline | INFO | wrapper:335 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | ENTRY: load_quarterly_data
+2025-09-03 21:51:29,864 | src.lending_club.data_pipeline | INFO | load_quarterly_data:49 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Loading data for 2016Q1 from data/2016Q1.csv
+2025-09-03 21:51:31,683 | src.lending_club.data_pipeline | INFO | _validate_temporal_constraints:202 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | 2016Q1: Temporal validation completed
+2025-09-03 21:51:31,683 | src.lending_club.data_pipeline | INFO | load_quarterly_data:62 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Loaded 133887 rows for 2016Q1
+2025-09-03 21:51:31,684 | src.lending_club.data_pipeline | INFO | load_quarterly_data:49 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Loading data for 2016Q2 from data/2016Q2.csv
+2025-09-03 21:51:32,972 | src.lending_club.data_pipeline | INFO | _validate_temporal_constraints:202 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | 2016Q2: Temporal validation completed
+2025-09-03 21:51:32,972 | src.lending_club.data_pipeline | INFO | load_quarterly_data:62 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Loaded 97854 rows for 2016Q2
+2025-09-03 21:51:32,972 | src.lending_club.data_pipeline | INFO | load_quarterly_data:49 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Loading data for 2016Q3 from data/2016Q3.csv
+2025-09-03 21:51:34,332 | src.lending_club.data_pipeline | INFO | _validate_temporal_constraints:202 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | 2016Q3: Temporal validation completed
+2025-09-03 21:51:34,333 | src.lending_club.data_pipeline | INFO | load_quarterly_data:62 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Loaded 99120 rows for 2016Q3
+2025-09-03 21:51:34,776 | src.lending_club.data_pipeline | INFO | load_quarterly_data:71 | exec_id=d3bade81-a6ad-4fb2-8f88-a6cd59ec013f | Combined data loaded: 330861 rows across 3 quarters
