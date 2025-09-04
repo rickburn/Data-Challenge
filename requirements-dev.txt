@@ -34,4 +34,3 @@ plotly==5.15.0
 
 # Development utilities
 ipdb==0.13.13  # Enhanced debugger
-tqdm==4.66.1   # Progress bars

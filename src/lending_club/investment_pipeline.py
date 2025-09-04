@@ -118,10 +118,11 @@ class InvestmentDecisionMaker:
             )
             
             # Create investment decision object
+            loan_amount = loan_row.get('funded_amnt', loan_row.get('loan_amnt', 0))
             candidate = InvestmentDecision(
                 loan_id=loan_row.get('id', idx),
-                loan_amount=loan_row.get('loan_amnt', 0),
-                investment_amount=min(loan_row.get('loan_amnt', 0), 25),  # Max $25 per loan for diversification
+                loan_amount=loan_amount,
+                investment_amount=min(loan_amount, 25),  # Max $25 per loan for diversification
                 default_probability=risk_scores[idx],
                 expected_return=expected_return,
                 risk_grade=loan_row.get('sub_grade', 'Unknown'),
@@ -136,50 +137,74 @@ class InvestmentDecisionMaker:
     
     def _calculate_expected_return(self, loan_row: pd.Series, default_probability: float) -> float:
         """Calculate expected return for a loan investment."""
+        # Handle interest rate - convert from percentage string to decimal
+        int_rate_raw = loan_row.get('int_rate', '0.0%')
+        if isinstance(int_rate_raw, str) and '%' in int_rate_raw:
+            interest_rate = float(int_rate_raw.strip('%')) / 100.0
+        else:
+            interest_rate = float(int_rate_raw)
+
         if self.roi_calculation_method == 'simple':
             # Simple calculation: (1 - default_prob) * interest_rate - default_prob * (1 - recovery_rate)
-            interest_rate = loan_row.get('int_rate', 0.0)
-            expected_return = ((1 - default_probability) * interest_rate - 
+            expected_return = ((1 - default_probability) * interest_rate -
                              default_probability * (1 - self.default_recovery_rate))
-            
+
         elif self.roi_calculation_method == 'detailed':
             # More detailed calculation considering term and payments
-            interest_rate = loan_row.get('int_rate', 0.0)
             term_years = loan_row.get('term', 36) / 12.0
-            
+
             # Approximate annual return considering default risk
             survival_probability = 1 - default_probability
             annual_return = interest_rate * survival_probability
             recovery_on_default = default_probability * self.default_recovery_rate
-            
+
             expected_return = annual_return + recovery_on_default - default_probability
-        
+
         else:
             # Fallback to interest rate minus risk premium
-            expected_return = loan_row.get('int_rate', 0.0) - default_probability * 2
-        
+            expected_return = interest_rate - default_probability * 2
+
         return expected_return
     
     def _filter_by_risk_constraints(self, candidates: List[InvestmentDecision]) -> List[InvestmentDecision]:
         """Filter candidates by risk constraints."""
         filtered = []
-        
+        failed_default_prob = 0
+        failed_expected_return = 0
+        failed_loan_amount = 0
+
+        # Debug: log some sample expected returns and default probabilities
+        if candidates:
+            sample_candidates = candidates[:5]  # First 5 candidates
+            self.logger.info(f"Sample candidate analysis:")
+            for i, cand in enumerate(sample_candidates):
+                self.logger.info(f"  Candidate {i}: default_prob={cand.default_probability:.4f}, "
+                               f"expected_return={cand.expected_return:.4f}, loan_amount={cand.loan_amount}")
+
         for candidate in candidates:
             # Check maximum default probability
             if candidate.default_probability > self.max_default_probability:
+                failed_default_prob += 1
                 continue
-            
+
             # Check minimum expected return
             if candidate.expected_return < self.min_expected_return:
+                failed_expected_return += 1
                 continue
-            
+
             # Check for valid loan amount
             if candidate.loan_amount <= 0 or candidate.investment_amount <= 0:
+                failed_loan_amount += 1
                 continue
-            
+
             filtered.append(candidate)
-        
-        self.logger.info(f"Filtered to {len(filtered)} candidates after risk constraints")
+
+        self.logger.info(f"Risk constraint filtering summary:")
+        self.logger.info(f"  Total candidates: {len(candidates)}")
+        self.logger.info(f"  Failed default probability (> {self.max_default_probability}): {failed_default_prob}")
+        self.logger.info(f"  Failed expected return (< {self.min_expected_return}): {failed_expected_return}")
+        self.logger.info(f"  Failed loan amount: {failed_loan_amount}")
+        self.logger.info(f"  Passed all constraints: {len(filtered)}")
         return filtered
     
     def _apply_selection_strategy(self, candidates: List[InvestmentDecision], 
@@ -346,7 +371,16 @@ class InvestmentDecisionMaker:
                 'avg_expected_return': 0,
                 'grade_distribution': {},
                 'term_distribution': {},
-                'risk_metrics': {}
+                'risk_metrics': {
+                    'portfolio_default_risk': 0.0,
+                    'default_risk_std': 0.0,
+                    'max_default_risk': 0.0,
+                    'min_default_risk': 0.0,
+                    'expected_portfolio_return': 0.0,
+                    'return_std': 0.0,
+                    'sharpe_ratio': 0.0,
+                    'concentration_risk': 0.0
+                }
             }
         
         # Basic metrics
@@ -418,6 +452,7 @@ class InvestmentDecisionMaker:
             'selection_strategy': self.selection_strategy,
             'budget_allocated': self.budget_per_quarter,
             'budget_used': portfolio_metrics['total_investment'],
+            'total_investment': portfolio_metrics['total_investment'],  # Add missing key
             'budget_utilization': portfolio_metrics['total_investment'] / self.budget_per_quarter,
             'loans_selected': len(selected_loans),
             'avg_investment_per_loan': portfolio_metrics['total_investment'] / len(selected_loans) if selected_loans else 0,
